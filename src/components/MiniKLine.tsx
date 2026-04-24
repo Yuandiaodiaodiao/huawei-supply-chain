@@ -7,6 +7,7 @@ export interface KLineBar {
   low: number;
   close: number;
   volume: number;
+  isToday?: boolean;
 }
 
 const UP_COLOR = "#e53935";
@@ -100,8 +101,22 @@ export function MiniKLine({
         const wickTop = priceToY(bar.high);
         const wickBot = priceToY(bar.low);
 
+        const today = bar.isToday;
+
         return (
           <g key={i}>
+            {/* today highlight bg */}
+            {today && (
+              <rect
+                x={x - 1}
+                y={padTop}
+                width={candleW + 2}
+                height={chartH}
+                fill={color}
+                opacity={0.06}
+                rx={1}
+              />
+            )}
             {/* wick */}
             <line
               x1={cx}
@@ -109,7 +124,7 @@ export function MiniKLine({
               x2={cx}
               y2={wickBot}
               stroke={color}
-              strokeWidth={wickW}
+              strokeWidth={today ? wickW * 1.5 : wickW}
             />
             {/* body */}
             <rect
@@ -117,11 +132,20 @@ export function MiniKLine({
               y={bodyTop}
               width={bodyW}
               height={bodyH}
-              fill={isUp ? "transparent" : color}
+              fill={isUp ? (today ? `${color}33` : "transparent") : color}
               stroke={color}
-              strokeWidth={isUp ? 0.6 : 0}
+              strokeWidth={isUp ? (today ? 1 : 0.6) : 0}
               rx={0.3}
             />
+            {/* today dot marker */}
+            {today && (
+              <circle
+                cx={cx}
+                cy={padTop + chartH + 4}
+                r={1.5}
+                fill={color}
+              />
+            )}
           </g>
         );
       })}

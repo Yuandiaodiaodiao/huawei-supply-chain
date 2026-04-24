@@ -67,11 +67,13 @@ export function StockKLineGrid() {
           const bars = klines[node.stockCode!] || [];
           const tierCfg = TIER_CONFIG[node.tier];
           const lastBar = bars[bars.length - 1];
-          const prevBar = bars.length > 1 ? bars[bars.length - 2] : lastBar;
-          const isUp = lastBar && prevBar ? lastBar.close >= prevBar.close : true;
+          const prevBar = bars.length > 1 ? bars[bars.length - 2] : null;
+          const isLive = lastBar?.isToday;
+          const refClose = prevBar ? prevBar.close : lastBar?.open;
+          const isUp = lastBar && refClose ? lastBar.close >= refClose : true;
           const dayChange =
-            lastBar && prevBar
-              ? ((lastBar.close - prevBar.close) / prevBar.close * 100).toFixed(2)
+            lastBar && refClose
+              ? (((lastBar.close - refClose) / refClose) * 100).toFixed(2)
               : null;
 
           return (
@@ -111,6 +113,11 @@ export function StockKLineGrid() {
                     >
                       {isUp ? "+" : ""}
                       {dayChange}%
+                    </span>
+                  )}
+                  {isLive && (
+                    <span className="text-[8px] px-1 py-px rounded bg-amber-500/15 text-amber-400 font-bold shrink-0">
+                      今
                     </span>
                   )}
                   <span className="text-[9px] text-gray-600 ml-auto">

@@ -7,6 +7,7 @@ export interface KLineBar {
   low: number;
   close: number;
   volume: number;
+  isToday?: boolean;
 }
 
 const EXCHANGE_PREFIX: Record<string, string> = { SZ: "sz", SH: "sh" };
@@ -57,6 +58,56 @@ async function fetchDailyKLine(
   }
 }
 
+async function fetchRealtimeQuote(
+  stockCode: string,
+  exchange: string
+): Promise<KLineBar | null> {
+  const prefix = EXCHANGE_PREFIX[exchange];
+  if (!prefix) return null;
+
+  const symbol = `${prefix}${stockCode}`;
+  const url = `https://hq.sinajs.cn/list=${symbol}`;
+
+  try {
+    const res = await fetch(url, {
+      headers: {
+        Referer: "https://finance.sina.com.cn",
+        "User-Agent":
+          "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36",
+      },
+      cache: "no-store",
+    });
+
+    const text = await res.text();
+    const match = text.match(/="(.+)"/);
+    if (!match || !match[1]) return null;
+
+    const p = match[1].split(",");
+    if (p.length < 32) return null;
+
+    const open = parseFloat(p[1]);
+    const price = parseFloat(p[3]);
+    const high = parseFloat(p[4]);
+    const low = parseFloat(p[5]);
+    const volume = parseFloat(p[8]);
+    const date = p[30]; // YYYY-MM-DD
+
+    if (!open || !price || !date) return null;
+
+    return {
+      day: date,
+      open,
+      high,
+      low,
+      close: price,
+      volume,
+      isToday: true,
+    };
+  } catch {
+    return null;
+  }
+}
+
 export async function GET(request: NextRequest) {
   const codes = request.nextUrl.searchParams.get("codes");
   const count = Math.min(
@@ -76,13 +127,32 @@ export async function GET(request: NextRequest) {
     return { code, exchange };
   });
 
-  const results = await Promise.allSettled(
-    pairs.map(({ code, exchange }) => fetchDailyKLine(code, exchange, count))
-  );
+  const [histResults, rtResults] = await Promise.all([
+    Promise.allSettled(
+      pairs.map(({ code, exchange }) => fetchDailyKLine(code, exchange, count))
+    ),
+    Promise.allSettled(
+      pairs.map(({ code, exchange }) => fetchRealtimeQuote(code, exchange))
+    ),
+  ]);
 
   const klines: Record<string, KLineBar[]> = {};
-  results.forEach((r, i) => {
-    klines[pairs[i].code] = r.status === "fulfilled" ? r.value : [];
+  histResults.forEach((r, i) => {
+    const code = pairs[i].code;
+    const bars = r.status === "fulfilled" ? r.value : [];
+    const rt =
+      rtResults[i].status === "fulfilled" ? rtResults[i].value : null;
+
+    if (rt && rt.open > 0) {
+      const lastHistDay = bars.length > 0 ? bars[bars.length - 1].day : "";
+      if (rt.day > lastHistDay) {
+        bars.push(rt);
+      } else if (rt.day === lastHistDay) {
+        bars[bars.length - 1] = rt;
+      }
+    }
+
+    klines[code] = bars;
   });
 
   return NextResponse.json({ klines, fetchedAt: new Date().toISOString() });
