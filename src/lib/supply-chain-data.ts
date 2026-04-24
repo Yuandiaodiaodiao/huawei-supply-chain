@@ -3,6 +3,7 @@ export type SupplyTier =
   | "wafer_fab"
   | "packaging"
   | "hbm"
+  | "cxmt_ecosystem"
   | "optical_module"
   | "optical_switch"
   | "connector"
@@ -53,47 +54,53 @@ export const TIER_CONFIG: Record<
     bgColor: "rgba(123,31,162,0.08)",
     order: 2,
   },
+  cxmt_ecosystem: {
+    label: "长鑫存储生态",
+    color: "#AB47BC",
+    bgColor: "rgba(171,71,188,0.08)",
+    order: 3,
+  },
   packaging: {
     label: "先进封装",
     color: "#1E88E5",
     bgColor: "rgba(30,136,229,0.08)",
-    order: 3,
+    order: 4,
   },
   optical_switch: {
     label: "OCS 光交换",
     color: "#00897B",
     bgColor: "rgba(0,137,123,0.08)",
-    order: 4,
+    order: 5,
   },
   optical_module: {
     label: "光模块",
     color: "#43A047",
     bgColor: "rgba(67,160,71,0.08)",
-    order: 5,
+    order: 6,
   },
   connector: {
     label: "高速连接器",
     color: "#FFB300",
     bgColor: "rgba(255,179,0,0.08)",
-    order: 6,
+    order: 7,
   },
   thermal: {
     label: "散热/基板",
     color: "#6D4C41",
     bgColor: "rgba(109,76,65,0.08)",
-    order: 7,
+    order: 8,
   },
   storage: {
     label: "存储",
     color: "#546E7A",
     bgColor: "rgba(84,110,122,0.08)",
-    order: 8,
+    order: 9,
   },
   server_integration: {
     label: "整机集成",
     color: "#5C6BC0",
     bgColor: "rgba(92,107,192,0.08)",
-    order: 9,
+    order: 10,
   },
 };
 
@@ -353,6 +360,76 @@ export const supplyChainNodes: SupplyChainNode[] = [
     keyProducts: ["HBM 检测设备"],
   },
 
+  // ── CXMT Ecosystem (长鑫存储生态) ──
+  {
+    id: "cxmt",
+    name: "长鑫存储",
+    nameEn: "CXMT",
+    tier: "cxmt_ecosystem",
+    tierLabel: "HBM3 代工 / DRAM 原厂",
+    role: "华为 HBM3 晶圆代工合作方，国产 DRAM 原厂（冲刺科创板 IPO）",
+    stockCode: null,
+    stockExchange: null,
+    supplyShare: 35,
+    keyProducts: ["HBM3 晶圆代工", "DDR5", "LPDDR5", "LPDDR5X"],
+    highlight:
+      "拟募资 295 亿元，Pre-IPO 估值约 1500 亿；2025 营收 550–580 亿，首次扭亏",
+  },
+  {
+    id: "shenkej",
+    name: "深科技",
+    nameEn: "Kaifa Technology",
+    tier: "cxmt_ecosystem",
+    tierLabel: "封测（沛顿科技）",
+    role: "子公司沛顿科技承接长鑫约 50% 封测订单",
+    stockCode: "000021",
+    stockExchange: "SZ",
+    supplyShare: 25,
+    marketShare: "~50%（封测）",
+    keyProducts: ["DRAM 封测", "HBM 封测"],
+    highlight: "沛顿科技为长鑫核心封测伙伴",
+  },
+  {
+    id: "yake",
+    name: "雅克科技",
+    nameEn: "Yoke Technology",
+    tier: "cxmt_ecosystem",
+    tierLabel: "前驱体材料",
+    role: "长鑫 Baseline 级核心材料供应商，前驱体市占率超 60%",
+    stockCode: "002409",
+    stockExchange: "SZ",
+    supplyShare: 20,
+    marketShare: ">60%（前驱体）",
+    keyProducts: ["前驱体", "光刻胶", "电子特气"],
+    highlight: "长鑫 Baseline 级材料核心供应商",
+  },
+  {
+    id: "jiangbolang",
+    name: "江波龙",
+    nameEn: "Longsys",
+    tier: "cxmt_ecosystem",
+    tierLabel: "存储模组",
+    role: "与长鑫合资布局 DDR5 模组，下游模组出货龙头",
+    stockCode: "301308",
+    stockExchange: "SZ",
+    supplyShare: 10,
+    keyProducts: ["DDR5 模组", "企业级 SSD", "嵌入式存储"],
+    highlight: "与长鑫合资推进国产 DDR5 模组替代",
+  },
+  {
+    id: "gigadevice_cxmt",
+    name: "兆易创新",
+    nameEn: "GigaDevice",
+    tier: "cxmt_ecosystem",
+    tierLabel: "最大A股持股方",
+    role: "长鑫科技最大 A 股持股方（~1.88%），董事长朱一明同时执掌两家",
+    stockCode: "603986",
+    stockExchange: "SH",
+    supplyShare: 10,
+    keyProducts: ["NOR Flash", "MCU", "DRAM（合作）"],
+    highlight: "2025 年预计关联交易 11.61 亿元",
+  },
+
   // ── Storage ──
   {
     id: "gigadevice",
@@ -363,22 +440,9 @@ export const supplyChainNodes: SupplyChainNode[] = [
     role: "通过华坤凯德切入昇腾服务器存储",
     stockCode: "603986",
     stockExchange: "SH",
-    supplyShare: 55,
+    supplyShare: 100,
     keyProducts: ["服务器 SSD", "自研主控芯片"],
     highlight: "同时是长鑫科技最大A股持股方（~1.88%）",
-  },
-  {
-    id: "cxmt",
-    name: "长鑫存储",
-    nameEn: "CXMT",
-    tier: "storage",
-    tierLabel: "DRAM 原厂",
-    role: "国产 DRAM 原厂（冲刺科创板 IPO）",
-    stockCode: null,
-    stockExchange: null,
-    supplyShare: 45,
-    keyProducts: ["DDR5", "LPDDR5"],
-    highlight: "拟募资 295 亿元，Pre-IPO 估值约 1500 亿",
   },
 
   // ── Server Integration ──
@@ -478,6 +542,35 @@ export const ASCEND_950_SPECS = {
     availability: "2026 Q4",
     card: "Atlas 950 SuperPoD",
   },
+};
+
+export const CXMT_PROFILE = {
+  name: "长鑫存储（长鑫科技集团）",
+  nameEn: "ChangXin Memory Technologies (CXMT)",
+  role: "华为 HBM3 晶圆代工合作方 · 中国唯一 DRAM 原厂",
+  ipo: {
+    status: "科创板 IPO 已受理（因财务资料更新暂中止）",
+    sponsor: "中金公司 + 中信建投（联合保荐）",
+    filingDate: "2025-12-30",
+    fundraising: "295 亿元",
+    preIpoValuation: "~1,500 亿元",
+    suspendReason: "2026-03-31 因财务资料过期中止，补交后恢复",
+  },
+  financials: {
+    revenue2024: "241.78 亿元",
+    netIncome2024: "-71.45 亿元",
+    revenue2025H1to9: "320.84 亿元（+97.79% YoY）",
+    revenue2025E: "550–580 亿元",
+    netIncome2025E: "20–35 亿元（首次扭亏）",
+  },
+  huaweiRelation:
+    "华为自研 HBM（HiBL/HiZQ）的 DRAM 晶圆由长鑫代工制造，是昇腾 950 HBM 供应链的核心一环",
+  keyPartners: [
+    { name: "深科技（沛顿）", role: "封测 ~50%", code: "000021" },
+    { name: "雅克科技", role: "前驱体 >60%", code: "002409" },
+    { name: "江波龙", role: "DDR5 模组合资", code: "301308" },
+    { name: "兆易创新", role: "最大A股持股方 ~1.88%", code: "603986" },
+  ],
 };
 
 export const DEEPSEEK_V4_DEPLOYMENT = {

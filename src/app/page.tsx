@@ -1,6 +1,7 @@
 import { SpecsPanel } from "@/components/SpecsPanel";
 import { ArchitectureDiagram } from "@/components/ArchitectureDiagram";
 import { StockKLineGrid } from "@/components/StockKLineGrid";
+import { CXMTPanel } from "@/components/CXMTPanel";
 import { Dashboard } from "@/components/Dashboard";
 
 export default function Home() {
@@ -41,6 +42,9 @@ export default function Home() {
 
         {/* Stock K-Line Grid */}
         <StockKLineGrid />
+
+        {/* CXMT Ecosystem Panel */}
+        <CXMTPanel />
 
         {/* Specs Panels */}
         <SpecsPanel />

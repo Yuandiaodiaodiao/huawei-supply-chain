@@ -5,6 +5,16 @@ const FLOW_TIERS: { tier: SupplyTier; items: { name: string; share: number }[] }
   { tier: "wafer_fab", items: [{ name: "中芯国际", share: 100 }] },
   { tier: "hbm", items: [{ name: "自研 HBM", share: 100 }] },
   {
+    tier: "cxmt_ecosystem",
+    items: [
+      { name: "长鑫存储", share: 35 },
+      { name: "深科技", share: 25 },
+      { name: "雅克科技", share: 20 },
+      { name: "江波龙", share: 10 },
+      { name: "兆易创新", share: 10 },
+    ],
+  },
+  {
     tier: "packaging",
     items: [
       { name: "兴森科技", share: 40 },
@@ -46,10 +56,7 @@ const FLOW_TIERS: { tier: SupplyTier; items: { name: string; share: number }[] }
   },
   {
     tier: "storage",
-    items: [
-      { name: "兆易创新", share: 55 },
-      { name: "长鑫存储", share: 45 },
-    ],
+    items: [{ name: "兆易创新", share: 100 }],
   },
   {
     tier: "server_integration",
