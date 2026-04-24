@@ -1,36 +1,63 @@
 import { TIER_CONFIG, SupplyTier } from "@/lib/supply-chain-data";
 
-const FLOW_TIERS: { tier: SupplyTier; items: string[] }[] = [
-  { tier: "chip_design", items: ["华为海思 (设计)"] },
-  { tier: "wafer_fab", items: ["中芯国际 (N+2/N+3)"] },
-  { tier: "hbm", items: ["自研 HBM (HiBL/HiZQ)"] },
+const FLOW_TIERS: { tier: SupplyTier; items: { name: string; share: number }[] }[] = [
+  { tier: "chip_design", items: [{ name: "华为海思", share: 100 }] },
+  { tier: "wafer_fab", items: [{ name: "中芯国际", share: 100 }] },
+  { tier: "hbm", items: [{ name: "自研 HBM", share: 100 }] },
   {
     tier: "packaging",
-    items: ["兴森科技 (ABF)", "长电科技 (Chiplet)", "通富微电"],
+    items: [
+      { name: "兴森科技", share: 40 },
+      { name: "长电科技", share: 40 },
+      { name: "通富微电", share: 20 },
+    ],
   },
   {
     tier: "optical_switch",
-    items: ["赛微电子 (MEMS)", "光库科技 (光开关)", "腾景科技 (WSS)"],
+    items: [
+      { name: "赛微电子", share: 50 },
+      { name: "光库科技", share: 30 },
+      { name: "腾景科技", share: 20 },
+    ],
   },
   {
     tier: "optical_module",
     items: [
-      "中际旭创 (1.6T)",
-      "华工科技 (800G/CPO)",
-      "光迅科技",
-      "兆驰 (800G)",
-      "德科立 (硅光)",
+      { name: "华工科技", share: 40 },
+      { name: "中际旭创", share: 25 },
+      { name: "光迅科技", share: 15 },
+      { name: "兆驰股份", share: 12 },
+      { name: "德科立", share: 8 },
     ],
   },
   {
     tier: "connector",
-    items: ["华丰科技 (>70%)", "意华股份 (~50%)"],
+    items: [
+      { name: "华丰科技", share: 60 },
+      { name: "意华股份", share: 40 },
+    ],
   },
-  { tier: "thermal", items: ["国机精工 (散热)", "赛腾股份 (检测)"] },
-  { tier: "storage", items: ["兆易创新", "长鑫存储 (IPO中)"] },
+  {
+    tier: "thermal",
+    items: [
+      { name: "国机精工", share: 65 },
+      { name: "赛腾股份", share: 35 },
+    ],
+  },
+  {
+    tier: "storage",
+    items: [
+      { name: "兆易创新", share: 55 },
+      { name: "长鑫存储", share: 45 },
+    ],
+  },
   {
     tier: "server_integration",
-    items: ["华鲲振宇", "拓维信息", "神州数码"],
+    items: [
+      { name: "华鲲振宇", share: 40 },
+      { name: "拓维信息", share: 30 },
+      { name: "神州数码", share: 30 },
+    ],
   },
 ];
 
@@ -40,25 +67,45 @@ export function ArchitectureDiagram() {
       <h2 className="text-sm font-bold text-white mb-4">
         供应链全景流程 · 从芯片设计到整机集成
       </h2>
-      <div className="flex items-start gap-0 min-w-[900px]">
+      <div className="flex items-start gap-0 min-w-[1000px]">
         {FLOW_TIERS.map((ft, i) => {
           const cfg = TIER_CONFIG[ft.tier];
           return (
             <div key={ft.tier} className="flex items-start">
-              <div className="flex flex-col items-center" style={{ minWidth: 90 }}>
+              <div className="flex flex-col items-center" style={{ minWidth: 95 }}>
                 <div
                   className="rounded-md px-2 py-1 text-[10px] font-bold text-center whitespace-nowrap"
                   style={{ color: cfg.color, backgroundColor: cfg.bgColor }}
                 >
                   {cfg.label}
                 </div>
-                <div className="mt-2 space-y-1">
+                <div className="mt-2 space-y-1 w-full px-0.5">
                   {ft.items.map((item) => (
                     <div
-                      key={item}
-                      className="rounded bg-white/[0.04] px-2 py-1 text-[10px] text-gray-300 text-center whitespace-nowrap"
+                      key={item.name}
+                      className="rounded bg-white/[0.04] px-1.5 py-1 text-center"
                     >
-                      {item}
+                      <div className="text-[10px] text-gray-300 whitespace-nowrap">
+                        {item.name}
+                      </div>
+                      <div className="mt-0.5 flex items-center gap-1">
+                        <div className="flex-1 h-1 rounded-full bg-white/5 overflow-hidden">
+                          <div
+                            className="h-full rounded-full"
+                            style={{
+                              width: `${item.share}%`,
+                              backgroundColor: cfg.color,
+                              opacity: 0.7,
+                            }}
+                          />
+                        </div>
+                        <span
+                          className="text-[8px] font-mono font-bold shrink-0"
+                          style={{ color: cfg.color }}
+                        >
+                          {item.share}%
+                        </span>
+                      </div>
                     </div>
                   ))}
                 </div>
@@ -86,6 +133,8 @@ export function ArchitectureDiagram() {
         <span>互联：柜内铜 FullMesh → 柜间 MEMS-OCS 全光交换</span>
         <span>|</span>
         <span>16.3 PB/s 总带宽 · &lt;2.1μs 跨柜时延</span>
+        <span>|</span>
+        <span className="text-gray-400">百分比 = 该层内供货重要度/份额占比，同层合计 100%</span>
       </div>
     </div>
   );

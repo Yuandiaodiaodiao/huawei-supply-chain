@@ -158,9 +158,10 @@ export function Dashboard() {
       {/* Supply Chain Cards */}
       {sortedGroups.map(([tier, nodes]) => {
         const cfg = TIER_CONFIG[tier];
+        const tierTotal = nodes.reduce((s, n) => s + n.supplyShare, 0);
         return (
           <div key={tier}>
-            <div className="flex items-center gap-2 mb-3">
+            <div className="flex items-center gap-2 mb-2">
               <div
                 className="h-3 w-1 rounded-full"
                 style={{ backgroundColor: cfg.color }}
@@ -168,7 +169,52 @@ export function Dashboard() {
               <h2 className="text-xs font-bold" style={{ color: cfg.color }}>
                 {cfg.label}
               </h2>
+              <span className="text-[10px] text-gray-500 font-mono">
+                {nodes.length} 家 · 合计 {tierTotal}%
+              </span>
               <div className="flex-1 h-px bg-white/5" />
+            </div>
+            {/* Tier stacked share bar */}
+            <div className="mb-3 rounded-lg border border-white/5 bg-white/[0.02] px-3 py-2">
+              <div className="flex h-5 w-full rounded overflow-hidden bg-white/5">
+                {nodes.map((node) => (
+                  <div
+                    key={node.id}
+                    className="relative flex items-center justify-center transition-all duration-500 first:rounded-l last:rounded-r"
+                    style={{
+                      width: `${(node.supplyShare / tierTotal) * 100}%`,
+                      background: `linear-gradient(135deg, ${cfg.color}cc, ${cfg.color}88)`,
+                      borderRight:
+                        nodes.indexOf(node) < nodes.length - 1
+                          ? "1px solid rgba(0,0,0,0.3)"
+                          : "none",
+                    }}
+                    title={`${node.name}: ${node.supplyShare}%`}
+                  >
+                    {node.supplyShare >= 15 && (
+                      <span className="text-[9px] font-bold text-white/90 truncate px-1">
+                        {node.supplyShare}%
+                      </span>
+                    )}
+                  </div>
+                ))}
+              </div>
+              <div className="mt-1.5 flex flex-wrap gap-x-4 gap-y-0.5">
+                {nodes.map((node) => (
+                  <div key={node.id} className="flex items-center gap-1">
+                    <div
+                      className="h-2 w-2 rounded-sm"
+                      style={{ backgroundColor: cfg.color, opacity: 0.6 + (node.supplyShare / tierTotal) * 0.4 }}
+                    />
+                    <span className="text-[10px] text-gray-400">
+                      {node.name}
+                    </span>
+                    <span className="text-[10px] font-mono font-semibold" style={{ color: cfg.color }}>
+                      {node.supplyShare}%
+                    </span>
+                  </div>
+                ))}
+              </div>
             </div>
             <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
               {nodes.map((node, i) => (

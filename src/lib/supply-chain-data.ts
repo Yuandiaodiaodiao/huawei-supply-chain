@@ -19,6 +19,7 @@ export interface SupplyChainNode {
   role: string;
   stockCode: string | null; // null = unlisted
   stockExchange: "SZ" | "SH" | "HK" | null;
+  supplyShare: number; // 0–100, same tier sums to 100
   marketShare?: string;
   keyProducts: string[];
   highlight?: string;
@@ -107,6 +108,7 @@ export const supplyChainNodes: SupplyChainNode[] = [
     role: "昇腾 950 芯片架构设计、光互联控制器设计",
     stockCode: null,
     stockExchange: null,
+    supplyShare: 100,
     keyProducts: [
       "Ascend 950PR (FP8 1PFLOPS)",
       "Ascend 950DT (FP8 2PFLOPS)",
@@ -125,6 +127,7 @@ export const supplyChainNodes: SupplyChainNode[] = [
     role: "昇腾 950 晶圆独家代工（N+2/N+3 工艺）",
     stockCode: "688981",
     stockExchange: "SH",
+    supplyShare: 100,
     marketShare: "100%（独家）",
     keyProducts: ["N+2 等效7nm", "N+3 等效5nm", "DUV多重曝光"],
     highlight: "月产能 3.8 万片 12 英寸，良率 N+2 达 92%",
@@ -140,6 +143,7 @@ export const supplyChainNodes: SupplyChainNode[] = [
     role: "自研 HBM 突破三星/SK海力士/美光禁供",
     stockCode: null,
     stockExchange: null,
+    supplyShare: 100,
     keyProducts: ["HiBL 1.0（低成本高容量）", "HiZQ 2.0（高带宽）"],
     highlight: "950PR: 112GB HBM | 950DT: 144GB / 4TB/s 带宽",
   },
@@ -154,6 +158,7 @@ export const supplyChainNodes: SupplyChainNode[] = [
     role: "昇腾封装基板（ABF载板）核心供应商",
     stockCode: "002436",
     stockExchange: "SZ",
+    supplyShare: 40,
     marketShare: "~70%",
     keyProducts: ["ABF 载板", "FCBGA 封装基板"],
     highlight: "ABF 载板产能国内第一",
@@ -167,6 +172,7 @@ export const supplyChainNodes: SupplyChainNode[] = [
     role: "Chiplet/HBM 集成先进封装",
     stockCode: "600584",
     stockExchange: "SH",
+    supplyShare: 40,
     keyProducts: ["XDFOI Chiplet", "HBM3E 集成封装"],
     highlight: "HBM3E 良率 98.5%",
   },
@@ -179,6 +185,7 @@ export const supplyChainNodes: SupplyChainNode[] = [
     role: "多层堆叠封装，适配 950 芯片",
     stockCode: "002156",
     stockExchange: "SZ",
+    supplyShare: 20,
     keyProducts: ["多层堆叠封装", "2.5D/3D 封装"],
   },
 
@@ -192,6 +199,7 @@ export const supplyChainNodes: SupplyChainNode[] = [
     role: "MEMS-OCS 微镜芯片独家代工",
     stockCode: "300456",
     stockExchange: "SZ",
+    supplyShare: 50,
     marketShare: "独家 ~60% 产能",
     keyProducts: ["MEMS 微镜芯片", "1024 路光交换适配"],
     highlight: "华为 OCS 芯片独家代工方",
@@ -205,6 +213,7 @@ export const supplyChainNodes: SupplyChainNode[] = [
     role: "MEMS 光开关已用于 Atlas 950 SuperPoD",
     stockCode: "300620",
     stockExchange: "SZ",
+    supplyShare: 30,
     keyProducts: ["MEMS 光开关"],
   },
   {
@@ -216,6 +225,7 @@ export const supplyChainNodes: SupplyChainNode[] = [
     role: "WSS、光环形器等核心光学组件",
     stockCode: "688195",
     stockExchange: "SH",
+    supplyShare: 20,
     keyProducts: ["WSS", "光环形器", "无源光器件"],
   },
 
@@ -229,6 +239,7 @@ export const supplyChainNodes: SupplyChainNode[] = [
     role: "1.6T 光模块独家供应",
     stockCode: "300308",
     stockExchange: "SZ",
+    supplyShare: 25,
     marketShare: "1.6T 独家",
     keyProducts: ["1.6T 光模块"],
     highlight: "单集群需求超 6900 个，华为订单占营收约 15%",
@@ -242,6 +253,7 @@ export const supplyChainNodes: SupplyChainNode[] = [
     role: "800G 光模块 + 3.2T CPO 光引擎独家供应商",
     stockCode: "000988",
     stockExchange: "SZ",
+    supplyShare: 40,
     marketShare: ">30%（光模块）/ CPO独家",
     keyProducts: ["800G 光模块", "3.2T CPO 光引擎"],
     highlight: "昇腾 AI 芯片约 90% 光模块由华工供应",
@@ -255,6 +267,7 @@ export const supplyChainNodes: SupplyChainNode[] = [
     role: "全光交换机光模块 & 超节点光模块核心供应商",
     stockCode: "002281",
     stockExchange: "SZ",
+    supplyShare: 15,
     keyProducts: ["全光交换机光模块", "2×4 超节点光模块"],
   },
   {
@@ -266,6 +279,7 @@ export const supplyChainNodes: SupplyChainNode[] = [
     role: "10G–800G 光模块直接供货华为",
     stockCode: "002429",
     stockExchange: "SZ",
+    supplyShare: 12,
     keyProducts: ["800G 光模块", "BOSA 光器件"],
     highlight: "800G 于 2026 Q2 小批量出货华为",
   },
@@ -278,6 +292,7 @@ export const supplyChainNodes: SupplyChainNode[] = [
     role: "硅光模块支撑跨集群数据传输",
     stockCode: "688205",
     stockExchange: "SH",
+    supplyShare: 8,
     keyProducts: ["硅光模块"],
   },
 
@@ -291,6 +306,7 @@ export const supplyChainNodes: SupplyChainNode[] = [
     role: "昇腾高速背板连接器绝对龙头",
     stockCode: "688629",
     stockExchange: "SH",
+    supplyShare: 60,
     marketShare: ">70%",
     keyProducts: ["224G 高速背板连接器", "线模组"],
     highlight: "获华为哈勃战略投资",
@@ -304,6 +320,7 @@ export const supplyChainNodes: SupplyChainNode[] = [
     role: "高速 I/O 连接器与光模块组件核心供应商",
     stockCode: "002897",
     stockExchange: "SZ",
+    supplyShare: 40,
     marketShare: "~50%",
     keyProducts: ["800G 高速连接器"],
     highlight: "800G 高速连接器已批量供货华为",
@@ -319,6 +336,7 @@ export const supplyChainNodes: SupplyChainNode[] = [
     role: "金刚石散热基板供应商",
     stockCode: "002046",
     stockExchange: "SZ",
+    supplyShare: 65,
     keyProducts: ["金刚石散热基板"],
     highlight: "导热性能提升 40%，已批量供货",
   },
@@ -331,6 +349,7 @@ export const supplyChainNodes: SupplyChainNode[] = [
     role: "HBM 检测设备供应商",
     stockCode: "603283",
     stockExchange: "SH",
+    supplyShare: 35,
     keyProducts: ["HBM 检测设备"],
   },
 
@@ -344,6 +363,7 @@ export const supplyChainNodes: SupplyChainNode[] = [
     role: "通过华坤凯德切入昇腾服务器存储",
     stockCode: "603986",
     stockExchange: "SH",
+    supplyShare: 55,
     keyProducts: ["服务器 SSD", "自研主控芯片"],
     highlight: "同时是长鑫科技最大A股持股方（~1.88%）",
   },
@@ -356,6 +376,7 @@ export const supplyChainNodes: SupplyChainNode[] = [
     role: "国产 DRAM 原厂（冲刺科创板 IPO）",
     stockCode: null,
     stockExchange: null,
+    supplyShare: 45,
     keyProducts: ["DDR5", "LPDDR5"],
     highlight: "拟募资 295 亿元，Pre-IPO 估值约 1500 亿",
   },
@@ -370,6 +391,7 @@ export const supplyChainNodes: SupplyChainNode[] = [
     role: "Atlas 服务器整机集成商",
     stockCode: null,
     stockExchange: null,
+    supplyShare: 40,
     keyProducts: ["Atlas 服务器"],
   },
   {
@@ -381,6 +403,7 @@ export const supplyChainNodes: SupplyChainNode[] = [
     role: "昇腾 AI 服务器集成",
     stockCode: "002261",
     stockExchange: "SZ",
+    supplyShare: 30,
     keyProducts: ["昇腾 AI 服务器"],
   },
   {
@@ -392,6 +415,7 @@ export const supplyChainNodes: SupplyChainNode[] = [
     role: "昇腾服务器分销与集成",
     stockCode: "000034",
     stockExchange: "SZ",
+    supplyShare: 30,
     keyProducts: ["昇腾服务器分销"],
   },
 ];
