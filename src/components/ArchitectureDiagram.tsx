@@ -70,8 +70,8 @@ const FLOW_TIERS: { tier: SupplyTier; items: { name: string; share: number }[] }
 
 export function ArchitectureDiagram() {
   return (
-    <div className="rounded-xl border border-[var(--card-border)] bg-[var(--card-bg)] p-5 overflow-x-auto">
-      <h2 className="text-sm font-bold text-white mb-4">
+    <div className="rounded-lg border border-[var(--card-border)] bg-[var(--card-bg)] px-3 py-2 overflow-x-auto">
+      <h2 className="text-xs font-bold text-white mb-2">
         供应链全景流程 · 从芯片设计到整机集成
       </h2>
       <div className="flex items-start gap-0 min-w-[1000px]">
@@ -79,37 +79,30 @@ export function ArchitectureDiagram() {
           const cfg = TIER_CONFIG[ft.tier];
           return (
             <div key={ft.tier} className="flex items-start">
-              <div className="flex flex-col items-center" style={{ minWidth: 95 }}>
+              <div className="flex flex-col items-center" style={{ minWidth: 88 }}>
                 <div
-                  className="rounded-md px-2 py-1 text-[10px] font-bold text-center whitespace-nowrap"
+                  className="rounded px-1.5 py-0.5 text-[9px] font-bold text-center whitespace-nowrap"
                   style={{ color: cfg.color, backgroundColor: cfg.bgColor }}
                 >
                   {cfg.label}
                 </div>
-                <div className="mt-2 space-y-1 w-full px-0.5">
+                <div className="mt-1 space-y-0.5 w-full px-0.5">
                   {ft.items.map((item) => (
                     <div
                       key={item.name}
-                      className="rounded bg-white/[0.04] px-1.5 py-1 text-center"
+                      className="rounded bg-white/[0.04] px-1 py-0.5 text-center"
                     >
-                      <div className="text-[10px] text-gray-300 whitespace-nowrap">
+                      <div className="text-[9px] text-gray-300 whitespace-nowrap leading-tight">
                         {item.name}
                       </div>
-                      <div className="mt-0.5 flex items-center gap-1">
-                        <div className="flex-1 h-1 rounded-full bg-white/5 overflow-hidden">
+                      <div className="flex items-center gap-0.5">
+                        <div className="flex-1 h-0.5 rounded-full bg-white/5 overflow-hidden">
                           <div
                             className="h-full rounded-full"
-                            style={{
-                              width: `${item.share}%`,
-                              backgroundColor: cfg.color,
-                              opacity: 0.7,
-                            }}
+                            style={{ width: `${item.share}%`, backgroundColor: cfg.color, opacity: 0.7 }}
                           />
                         </div>
-                        <span
-                          className="text-[8px] font-mono font-bold shrink-0"
-                          style={{ color: cfg.color }}
-                        >
+                        <span className="text-[7px] font-mono font-bold shrink-0" style={{ color: cfg.color }}>
                           {item.share}%
                         </span>
                       </div>
@@ -118,15 +111,9 @@ export function ArchitectureDiagram() {
                 </div>
               </div>
               {i < FLOW_TIERS.length - 1 && (
-                <div className="flex items-center pt-3 px-0.5 text-gray-600">
-                  <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-                    <path
-                      d="M6 4l4 4-4 4"
-                      stroke="currentColor"
-                      strokeWidth="1.5"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    />
+                <div className="flex items-center pt-2 px-0 text-gray-600">
+                  <svg width="12" height="12" viewBox="0 0 16 16" fill="none">
+                    <path d="M6 4l4 4-4 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
                   </svg>
                 </div>
               )}
@@ -134,14 +121,14 @@ export function ArchitectureDiagram() {
           );
         })}
       </div>
-      <div className="mt-4 flex items-center gap-4 text-[10px] text-gray-500 border-t border-white/5 pt-3">
-        <span>Atlas 950 SuperPoD：128 计算柜 + 32 互联柜 = 8,192 卡</span>
+      <div className="mt-1.5 flex items-center gap-3 text-[9px] text-gray-500 border-t border-white/5 pt-1.5">
+        <span>128 计算柜 + 32 互联柜 = 8,192 卡</span>
         <span>|</span>
-        <span>互联：柜内铜 FullMesh → 柜间 MEMS-OCS 全光交换</span>
+        <span>柜内铜 FullMesh → 柜间 MEMS-OCS 全光</span>
         <span>|</span>
-        <span>16.3 PB/s 总带宽 · &lt;2.1μs 跨柜时延</span>
+        <span>16.3 PB/s · &lt;2.1μs</span>
         <span>|</span>
-        <span className="text-gray-400">百分比 = 该层内供货重要度/份额占比，同层合计 100%</span>
+        <span className="text-gray-400">同层合计 100%</span>
       </div>
     </div>
   );

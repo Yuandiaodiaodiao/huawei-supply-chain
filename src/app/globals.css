@@ -36,7 +36,7 @@ body {
 }
 
 @keyframes slide-in {
-  from { opacity: 0; transform: translateY(12px); }
+  from { opacity: 0; transform: translateY(6px); }
   to { opacity: 1; transform: translateY(0); }
 }
 
@@ -57,12 +57,11 @@ body {
 .stock-down { color: var(--accent-green); }
 
 .tier-badge {
-  font-size: 0.65rem;
-  letter-spacing: 0.05em;
-  padding: 2px 8px;
-  border-radius: 4px;
+  font-size: 0.6rem;
+  letter-spacing: 0.03em;
+  padding: 1px 5px;
+  border-radius: 3px;
   font-weight: 600;
-  text-transform: uppercase;
 }
 
 .scrollbar-thin::-webkit-scrollbar {
