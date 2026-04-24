@@ -1,5 +1,6 @@
 import { SpecsPanel } from "@/components/SpecsPanel";
 import { ArchitectureDiagram } from "@/components/ArchitectureDiagram";
+import { StockKLineGrid } from "@/components/StockKLineGrid";
 import { Dashboard } from "@/components/Dashboard";
 
 export default function Home() {
@@ -37,6 +38,9 @@ export default function Home() {
       <div className="mx-auto max-w-[1600px] px-4 py-6 sm:px-6 space-y-6">
         {/* Architecture Flow */}
         <ArchitectureDiagram />
+
+        {/* Stock K-Line Grid */}
+        <StockKLineGrid />
 
         {/* Specs Panels */}
         <SpecsPanel />
